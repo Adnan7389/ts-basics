@@ -1,0 +1,206 @@
+/*********************************************************
+ * 1. Basic Class + Constructor + Public Properties
+ *********************************************************/
+class Person {
+    // properties with types
+    public name: string;
+    public age: number;
+
+    constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+    }
+
+    greet() {
+        return `Hi, I'm ${this.name}, age ${this.age}.`;
+    }
+}
+
+const p = new Person("Aster", 22);
+console.log(p.greet());
+
+
+
+/*********************************************************
+ * 2. Parameter Properties (shorter constructor syntax)
+ *********************************************************/
+class Book {
+    // public title automatically becomes: this.title = title
+    constructor(public title: string, private pages: number) { }
+
+    getPages() {
+        return this.pages;
+    }
+}
+
+const b = new Book("TS Handbook", 250);
+
+
+
+/*********************************************************
+ * 3. Access Modifiers — public, private, protected
+ *********************************************************/
+class BankAccount {
+    public owner: string;
+    private balance: number;        // only inside this class
+    protected accountType = "basic"; // visible in subclasses
+
+    constructor(owner: string, balance: number) {
+        this.owner = owner;
+        this.balance = balance;
+    }
+
+    getBalance() {
+        return this.balance;
+    }
+
+    deposit(amount: number) {
+        this.balance += amount;
+    }
+}
+
+class SavingsAccount extends BankAccount {
+    applyInterest() {
+        // can use protected
+        console.log(`Applying interest for: ${this.accountType}`);
+    }
+}
+
+
+
+/*********************************************************
+ * 4. JavaScript Runtime Private Field (#private)
+ *********************************************************/
+class SecureVault {
+    #secretKey = "XYZ123"; // real runtime private
+
+    reveal() {
+        return this.#secretKey;
+    }
+}
+
+const vault = new SecureVault();
+// vault.#secretKey ❌ Syntax error (real privacy)
+
+
+
+/*********************************************************
+ * 5. Inheritance + super() + Method Overriding
+ *********************************************************/
+class Animal {
+    constructor(public name: string) { }
+
+    speak() {
+        return `${this.name} makes a sound.`;
+    }
+}
+
+class Dog extends Animal {
+    constructor(name: string) {
+        super(name); // call parent constructor
+    }
+
+    // override parent method
+    speak() {
+        return `${this.name} barks.`;
+    }
+}
+
+console.log(new Dog("Rex").speak());
+
+
+
+/*********************************************************
+ * 6. Static Properties & Methods
+ *********************************************************/
+class MathUtils {
+    static PI = 3.14159;
+
+    static areaCircle(r: number) {
+        return MathUtils.PI * r * r;
+    }
+}
+
+console.log(MathUtils.areaCircle(3)); // no instance needed
+
+
+
+/*********************************************************
+ * 7. Interface Implementation (implements)
+ *********************************************************/
+interface Logger {
+    log(msg: string): void;
+}
+
+class ConsoleLogger implements Logger {
+    log(msg: string) {
+        console.log("LOG:", msg);
+    }
+}
+
+const logger = new ConsoleLogger();
+logger.log("Hello!");
+
+
+
+/*********************************************************
+ * 8. Abstract Classes (cannot be instantiated)
+ *********************************************************/
+abstract class Shape {
+    abstract area(): number; // must be implemented
+
+    describe() {
+        return "This is a shape.";
+    }
+}
+
+class Circle extends Shape {
+    constructor(public radius: number) {
+        super();
+    }
+
+    area() {
+        return Math.PI * this.radius ** 2;
+    }
+}
+
+const c = new Circle(5);
+console.log(c.area());
+
+
+
+/*********************************************************
+ * 9. Putting It All Together (practical pattern)
+ *********************************************************/
+interface Identifiable {
+    id: string;
+    getId(): string;
+}
+
+abstract class BaseEntity implements Identifiable {
+    constructor(public id: string, protected createdAt: Date = new Date()) { }
+
+    getId() {
+        return this.id;
+    }
+
+    getAgeMs() {
+        return Date.now() - this.createdAt.getTime();
+    }
+}
+
+class User extends BaseEntity {
+    #token: string; // secure private
+
+    constructor(id: string, public name: string, token: string) {
+        super(id);
+        this.#token = token;
+    }
+
+    getInfo() {
+        return `${this.name} (id=${this.getId()}, ageMs=${this.getAgeMs()})`;
+    }
+}
+
+const user = new User("1", "Adnan", "SECRET567");
+console.log(user.getInfo());
