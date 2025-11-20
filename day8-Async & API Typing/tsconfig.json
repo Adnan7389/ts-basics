@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "es2022",
+        "target": "es2020",
+        "strict": true,
+        "moduleResolution": "node",
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true
+    },
+    "include": [
+        "src"
+    ]
+}
