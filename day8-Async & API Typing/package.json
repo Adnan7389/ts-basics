@@ -1,0 +1,13 @@
+{
+    "name": "ts-day8-Async-and-API-Typing",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/index.js",
+        "dev": "tsc --watch"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0"
+    }
+}
