@@ -1,0 +1,13 @@
+{
+  "name": "greeting-cli",
+  "version": "1.0.0",
+  "description": "A simple greeting CLI made with TypeScript",
+  "main": "greeting.js",
+  "bin": {
+    "greet": "./greeting.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
